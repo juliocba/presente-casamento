@@ -34,6 +34,7 @@
       background: white;
       border-radius: 12px;
       overflow: hidden;
+      cursor: pointer;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
       transition: 0.3s;
     }
@@ -62,22 +63,36 @@
       color: #333;
     }
 
-    .pix-box {
+    /* MODAL */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    .modal-content {
       background: white;
-      margin-top: 40px;
+      margin: 10% auto;
       padding: 20px;
       border-radius: 12px;
+      width: 300px;
       text-align: center;
     }
 
-    .pix-box img {
+    .modal img {
       width: 180px;
-      margin: 10px 0;
+      margin: 15px 0;
     }
 
-    .pix-key {
-      font-weight: bold;
-      margin-top: 10px;
+    .close {
+      float: right;
+      font-size: 20px;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -90,16 +105,15 @@
 
     <div class="grid">
 
-      <!-- ITEM -->
-      <div class="card">
+      <div class="card" onclick="abrirModal()">
         <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93">
         <div class="card-body">
-          <div class="title">1kg de café pra sobreviver às manhãs de casados ☕</div>
+          <div class="title">1kg de café pra sobreviver ☕</div>
           <div class="price">R$ 50,00</div>
         </div>
       </div>
 
-      <div class="card">
+      <div class="card" onclick="abrirModal()">
         <img src="https://images.unsplash.com/photo-1546069901-eacef0df6022">
         <div class="card-body">
           <div class="title">1 mês de almoço garantido 🍛</div>
@@ -107,67 +121,49 @@
         </div>
       </div>
 
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438">
-        <div class="card-body">
-          <div class="title">Academia pós-casamento (porque vai precisar 😂)</div>
-          <div class="price">R$ 480,00</div>
-        </div>
-      </div>
-
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952">
-        <div class="card-body">
-          <div class="title">Kit limpeza pra ver se a casa fica arrumada 🧹</div>
-          <div class="price">R$ 94,00</div>
-        </div>
-      </div>
-
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092">
-        <div class="card-body">
-          <div class="title">Pizza semanal pra evitar brigas 🍕</div>
-          <div class="price">R$ 120,00</div>
-        </div>
-      </div>
-
-      <div class="card">
+      <div class="card" onclick="abrirModal()">
         <img src="https://images.unsplash.com/photo-1519864600265-abb23847ef2c">
         <div class="card-body">
-          <div class="title">Lua de mel 🌴 (essa é prioridade 😍)</div>
+          <div class="title">Lua de mel 🌴 (prioridade 😍)</div>
           <div class="price">R$ 1000,00</div>
         </div>
       </div>
 
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c">
-        <div class="card-body">
-          <div class="title">Ajuda pra mobiliar a casa (tá vazia 😭)</div>
-          <div class="price">R$ 500,00</div>
-        </div>
-      </div>
-
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1521335629791-ce4aec67dd53">
-        <div class="card-body">
-          <div class="title">Valor surpresa (Deus toca no seu coração 🙏)</div>
-          <div class="price">R$ ???</div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- PIX -->
-    <div class="pix-box">
-      <h2>💳 Presente via Pix</h2>
-
-      <img src="qrcode.png">
-
-      <p>Ou use a chave:</p>
-      <div class="pix-key">hellengt02@gmail.com</div>
     </div>
 
   </div>
+
+  <!-- MODAL -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="fecharModal()">&times;</span>
+
+      <h2>💳 Presentear via Pix</h2>
+
+      <img src="qrcode-pix.png" alt="QR Code Pix">
+
+      <p>Ou use a chave:</p>
+      <strong>hellengt02@gmail.com</strong>
+    </div>
+  </div>
+
+  <script>
+    function abrirModal() {
+      document.getElementById("modal").style.display = "block";
+    }
+
+    function fecharModal() {
+      document.getElementById("modal").style.display = "none";
+    }
+
+    // fechar clicando fora
+    window.onclick = function (event) {
+      let modal = document.getElementById("modal");
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+  </script>
 
 </body>
 
