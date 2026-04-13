@@ -114,6 +114,12 @@ h1 {
 .btn:hover {
   background: #3e332d;
 }
+/* CONTADOR */
+.contador {
+  font-size: 14px;
+  margin-bottom: 25px;
+  opacity: 0.7;
+}
 </style>
 </head>
 
@@ -123,11 +129,13 @@ h1 {
 
 <h1>Júlio & Hellen</h1>
 
+<div class="contador" id="contador"></div>
+
 <div class="frase">
   Nosso maior presente é ter vocês ao nosso lado nesse momento tão especial.
   Mas, se for do seu desejo nos presentear, qualquer gesto de carinho será recebido com muito amor e fará parte do início da nossa nova história juntos ✨
 </div>
-
+</br>
 <div class="clique">
   Clique na foto para enviar um PIX de qualquer valor 💌
 </div>
@@ -152,6 +160,7 @@ h1 {
     <strong id="pixKey">hellengt02@gmail.com</strong>
 
     <button class="btn" onclick="copiarPix()">Copiar chave Pix</button>
+    <div class="feedback" id="feedback">Chave copiada com sucesso ✨</div>
 
   </div>
 </div>
@@ -195,9 +204,32 @@ window.onclick = function(event) {
 
 // copiar pix
 function copiarPix() {
-  navigator.clipboard.writeText("hellengt02@gmail.com");
-  alert("Chave Pix copiada!");
+  const chave = document.getElementById("pixKey").innerText;
+  navigator.clipboard.writeText(chave);
+
+  const feedback = document.getElementById("feedback");
+  feedback.style.display = "block";
+
+  setTimeout(() => {
+    feedback.style.display = "none";
+  }, 2000);
 }
+// contador
+const dataCasamento = new Date("2026-06-26");
+
+function atualizarContador() {
+  const hoje = new Date();
+  const diff = dataCasamento - hoje;
+
+  const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+  document.getElementById("contador").innerText =
+    dias > 0 ? "Faltam " + dias + " dias para o nosso grande dia 💍" :
+    "Hoje é o grande dia! 💖";
+}
+
+setInterval(atualizarContador, 1000);
+atualizarContador();
 </script>
 
 </body>
