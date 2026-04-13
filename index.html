@@ -1,195 +1,42 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
-
-<title>Júlio & Hellen</title>
-
-<style>
-html, body {
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  background: #f5efe6;
-  color: #5a4a42;
-  font-family: 'Montserrat', sans-serif;
-}
-
-/* ANIMAÇÃO DE CONVITE */
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: #f5efe6;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  animation: fadeOut 1s ease forwards;
-  animation-delay: 2.5s;
-}
-
-.convite {
-  width: 200px;
-  height: 130px;
-  background: #e8dfd4;
-  border-radius: 8px;
-  position: relative;
-  transform-origin: top;
-  animation: abrirConvite 1.5s ease forwards;
-}
-
-@keyframes abrirConvite {
-  0% { transform: rotateX(0deg); }
-  100% { transform: rotateX(120deg); }
-}
-
-@keyframes fadeOut {
-  to { opacity: 0; visibility: hidden; }
-}
-
-/* CONTEÚDO */
-.container {
-  max-width: 600px;
-  margin: auto;
-  padding: 60px 20px;
-  text-align: center;
-}
-
-h1 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 40px;
-}
-
-.frase {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 20px;
-  line-height: 1.8;
-  margin: 30px 0;
-}
-
-.clique {
-  margin-bottom: 20px;
-  font-size: 14px;
-}
-
-.foto img {
-  width: 100%;
-  max-width: 380px;
-  border-radius: 20px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-  cursor: pointer;
-  transition: 0.4s;
-}
-
-.foto img:hover {
-  transform: scale(1.05);
-}
-
-/* MODAL */
-.modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-  align-items: center;
-  justify-content: center;
-}
-
-.modal-content {
-  background: #f5efe6;
-  padding: 25px;
-  border-radius: 20px;
-  width: 90%;
-  max-width: 320px;
-  text-align: center;
-}
-
-.close {
-  position: absolute;
-  right: 15px;
-  top: 10px;
-  cursor: pointer;
-}
-
-.btn {
-  margin-top: 10px;
-  padding: 12px;
-  border: none;
-  border-radius: 10px;
-  background: #5a4a42;
-  color: white;
-  width: 100%;
-}
-</style>
-</head>
-
-<body>
-
-<!-- ANIMAÇÃO -->
-<div class="overlay">
-  <div class="convite"></div>
-</div>
-
-<div class="container">
-
-<h1>Júlio & Hellen</h1>
-
-<div class="frase">
-  Nosso maior presente é ter vocês ao nosso lado nesse momento tão especial.
-  Mas, se for do seu desejo nos presentear, qualquer gesto de carinho será recebido com muito amor e fará parte do início da nossa nova história juntos ✨
-</div>
-
-<div class="clique">
-  Clique na foto para enviar um PIX de qualquer valor 💌
-</div>
-
-<div class="foto" onclick="abrirModal()">
-  <img src="foto-casal.jpeg">
-</div>
-
-</div>
-
-<!-- MODAL -->
-<div id="modal" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="fecharModal()">✕</span>
-
-    <h3>Presente via Pix</h3>
-
-    <img src="qrcode-pix.png" width="180">
-
-    <p>Ou utilize a chave:</p>
-    <strong id="pixKey">hellengt02@gmail.com</strong>
-
-    <button class="btn" onclick="copiarPix()">Copiar chave Pix</button>
-  </div>
-</div>
-
 <script>
+let scrollY = 0;
+
 function abrirModal() {
-  document.getElementById("modal").style.display = "flex";
-  document.body.style.overflow = "hidden";
+  const modal = document.getElementById("modal");
+  modal.style.display = "flex";
+
+  // salva posição atual
+  scrollY = window.scrollY;
+
+  // trava tela (funciona em mobile)
+  document.body.style.position = "fixed";
+  document.body.style.top = `-${scrollY}px`;
+  document.body.style.width = "100%";
 }
 
 function fecharModal() {
-  document.getElementById("modal").style.display = "none";
-  document.body.style.overflow = "auto";
+  const modal = document.getElementById("modal");
+  modal.style.display = "none";
+
+  // libera tela
+  document.body.style.position = "";
+  document.body.style.top = "";
+
+  // volta pro lugar exato
+  window.scrollTo(0, scrollY);
 }
 
+// fechar clicando fora
 window.onclick = function(event) {
   let modal = document.getElementById("modal");
-  if (event.target === modal) fecharModal();
+  if (event.target === modal) {
+    fecharModal();
+  }
 }
 
+// copiar pix
 function copiarPix() {
   const chave = document.getElementById("pixKey").innerText;
   navigator.clipboard.writeText(chave);
-  alert("Chave Pix copiada!");
 }
 </script>
-
-</body>
-</html>
