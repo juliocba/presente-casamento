@@ -6,14 +6,21 @@
 <title>Júlio & Hellen</title>
 
 <style>
-body {
+html, body {
   margin: 0;
   font-family: 'Georgia', serif;
   color: #5a4a42;
   text-align: center;
+  height: 100%;
+  overflow-x: hidden;
 
-  /* FUNDO degradê elegante */
   background: radial-gradient(circle, #f5efe6 0%, #f5efe6 40%, #ffffff 100%);
+}
+
+body.modal-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
 }
 
 .container {
@@ -37,11 +44,20 @@ h1 {
   font-size: 16px;
 }
 
+.clique {
+  margin-top: 20px;
+  font-size: 15px;
+}
+
+.foto {
+  cursor: pointer;
+}
+
 .foto img {
   width: 100%;
   max-width: 380px;
   border-radius: 16px;
-  margin-top: 20px;
+  margin-top: 10px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.15);
   transition: 0.3s;
 }
@@ -50,29 +66,23 @@ h1 {
   transform: scale(1.03);
 }
 
-.clique {
-  margin-top: 12px;
-  font-size: 14px;
-}
-
 /* MODAL */
 .modal {
-  display: none;
+  display: none; /* CORREÇÃO BUG */
   position: fixed;
-  z-index: 10;
+  z-index: 999;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
   background: rgba(0,0,0,0.6);
 
-  /* centralização perfeita */
-  display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .modal-content {
+  position: relative;
   background: #f5efe6;
   padding: 25px;
   border-radius: 16px;
@@ -87,11 +97,12 @@ h1 {
   margin: 15px 0;
 }
 
+/* BOTÃO X */
 .close {
   position: absolute;
-  right: 20px;
-  top: 15px;
-  font-size: 22px;
+  right: 12px;
+  top: 10px;
+  font-size: 24px;
   cursor: pointer;
 }
 
@@ -119,17 +130,6 @@ h1 {
   from {opacity: 0; transform: translateY(30px);}
   to {opacity: 1; transform: translateY(0);}
 }
-
-/* RESPONSIVO */
-@media (min-width: 768px) {
-  h1 {
-    font-size: 36px;
-  }
-
-  .frase {
-    font-size: 19px;
-  }
-}
 </style>
 </head>
 
@@ -151,12 +151,12 @@ h1 {
   Mas, se for do seu desejo nos presentear, qualquer gesto de carinho será recebido com muito amor e fará parte do início da nossa nova história juntos ✨
 </div>
 
-<div class="foto" onclick="abrirModal()">
-  <img src="foto-casal.jpeg">
-</div>
-
 <div class="clique">
   Clique na foto para enviar um presente via Pix 💌
+</div>
+
+<div class="foto" onclick="abrirModal()">
+  <img src="foto-casal.jpeg">
 </div>
 
 </div>
@@ -181,21 +181,24 @@ h1 {
 </div>
 
 <script>
-// modal
 function abrirModal() {
-  document.getElementById("modal").style.display = "flex";
-  document.body.style.overflow = "hidden"; // trava scroll
+  const modal = document.getElementById("modal");
+  modal.style.display = "flex";
+
+  document.body.classList.add("modal-open");
 }
 
 function fecharModal() {
-  document.getElementById("modal").style.display = "none";
-  document.body.style.overflow = "auto"; // libera scroll
+  const modal = document.getElementById("modal");
+  modal.style.display = "none";
+
+  document.body.classList.remove("modal-open");
 }
 
-// fechar clicando fora
+// clicar fora
 window.onclick = function(event) {
   let modal = document.getElementById("modal");
-  if (event.target == modal) {
+  if (event.target === modal) {
     fecharModal();
   }
 }
