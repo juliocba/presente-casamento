@@ -31,6 +31,12 @@ h1 {
   font-size: 40px;
 }
 
+.contador {
+  font-size: 14px;
+  margin-bottom: 20px;
+  opacity: 0.8;
+}
+
 .frase {
   font-family: 'Cormorant Garamond', serif;
   font-size: 20px;
@@ -58,12 +64,11 @@ h1 {
 
 /* MODAL */
 .modal {
-  display: none; /* IMPORTANTE */
+  display: none;
   position: fixed;
   inset: 0;
   z-index: 999;
   background: rgba(0,0,0,0.6);
-
   align-items: center;
   justify-content: center;
 }
@@ -89,7 +94,6 @@ h1 {
   margin: 15px 0;
 }
 
-/* BOTÃO X */
 .close {
   position: absolute;
   right: 12px;
@@ -98,7 +102,6 @@ h1 {
   cursor: pointer;
 }
 
-/* BOTÃO */
 .btn {
   margin-top: 10px;
   padding: 12px;
@@ -114,11 +117,13 @@ h1 {
 .btn:hover {
   background: #3e332d;
 }
-/* CONTADOR */
-.contador {
-  font-size: 14px;
-  margin-bottom: 25px;
-  opacity: 0.7;
+
+/* FEEDBACK */
+.feedback {
+  font-size: 13px;
+  margin-top: 8px;
+  display: none;
+  color: #5a4a42;
 }
 </style>
 </head>
@@ -135,7 +140,7 @@ h1 {
   Nosso maior presente é ter vocês ao nosso lado nesse momento tão especial.
   Mas, se for do seu desejo nos presentear, qualquer gesto de carinho será recebido com muito amor e fará parte do início da nossa nova história juntos ✨
 </div>
-</br>
+
 <div class="clique">
   Clique na foto para enviar um PIX de qualquer valor 💌
 </div>
@@ -160,7 +165,8 @@ h1 {
     <strong id="pixKey">hellengt02@gmail.com</strong>
 
     <button class="btn" onclick="copiarPix()">Copiar chave Pix</button>
-    <div class="feedback" id="feedback">Chave copiada com sucesso ✨</div>
+
+    <div id="feedback" class="feedback">Chave copiada com sucesso ✨</div>
 
   </div>
 </div>
@@ -168,12 +174,12 @@ h1 {
 <script>
 let scrollY = 0;
 
+// MODAL
 function abrirModal() {
   const modal = document.getElementById("modal");
 
   modal.style.display = "flex";
 
-  // trava scroll (funciona em mobile)
   scrollY = window.scrollY;
 
   document.body.style.position = "fixed";
@@ -187,22 +193,18 @@ function fecharModal() {
 
   modal.style.display = "none";
 
-  // libera scroll
   document.body.style.position = "";
   document.body.style.top = "";
 
   window.scrollTo(0, scrollY);
 }
 
-// fechar clicando fora
 window.onclick = function(event) {
   const modal = document.getElementById("modal");
-  if (event.target === modal) {
-    fecharModal();
-  }
+  if (event.target === modal) fecharModal();
 }
 
-// copiar pix
+// COPIAR PIX + FEEDBACK
 function copiarPix() {
   const chave = document.getElementById("pixKey").innerText;
   navigator.clipboard.writeText(chave);
@@ -214,7 +216,8 @@ function copiarPix() {
     feedback.style.display = "none";
   }, 2000);
 }
-// contador
+
+// CONTADOR
 const dataCasamento = new Date("2026-06-26");
 
 function atualizarContador() {
@@ -224,8 +227,9 @@ function atualizarContador() {
   const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
 
   document.getElementById("contador").innerText =
-    dias > 0 ? "Faltam " + dias + " dias para o nosso grande dia 💍" :
-    "Hoje é o grande dia! 💖";
+    dias > 0
+      ? "Faltam " + dias + " dias para o nosso grande dia 💍"
+      : "Hoje é o grande dia! 💖";
 }
 
 setInterval(atualizarContador, 1000);
