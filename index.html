@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- FONTES PREMIUM -->
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
 
 <title>Júlio & Hellen</title>
@@ -14,73 +13,66 @@ html, body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-
-  background: radial-gradient(circle at center, #f5efe6 0%, #f5efe6 40%, #ffffff 100%);
+  background: #f5efe6;
   color: #5a4a42;
-
   font-family: 'Montserrat', sans-serif;
-  text-align: center;
 }
 
-/* brilho suave */
-body::before {
-  content: "";
+/* ANIMAÇÃO DE CONVITE */
+.overlay {
   position: fixed;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 60%);
-  animation: brilho 15s linear infinite;
-  z-index: 0;
+  inset: 0;
+  background: #f5efe6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeOut 1s ease forwards;
+  animation-delay: 2.5s;
 }
 
-@keyframes brilho {
-  0% {transform: rotate(0deg);}
-  100% {transform: rotate(360deg);}
-}
-
-.container {
+.convite {
+  width: 200px;
+  height: 130px;
+  background: #e8dfd4;
+  border-radius: 8px;
   position: relative;
-  z-index: 1;
+  transform-origin: top;
+  animation: abrirConvite 1.5s ease forwards;
+}
+
+@keyframes abrirConvite {
+  0% { transform: rotateX(0deg); }
+  100% { transform: rotateX(120deg); }
+}
+
+@keyframes fadeOut {
+  to { opacity: 0; visibility: hidden; }
+}
+
+/* CONTEÚDO */
+.container {
   max-width: 600px;
   margin: auto;
   padding: 60px 20px;
-  animation: fadeUp 1s ease;
+  text-align: center;
 }
 
-@keyframes fadeUp {
-  from {opacity: 0; transform: translateY(30px);}
-  to {opacity: 1; transform: translateY(0);}
-}
-
-/* TÍTULO */
 h1 {
   font-family: 'Cormorant Garamond', serif;
   font-size: 40px;
-  font-weight: 600;
-  margin-bottom: 10px;
-  letter-spacing: 1px;
 }
 
-/* CONTADOR */
-.contador {
-  font-size: 14px;
-  margin-bottom: 25px;
-  opacity: 0.7;
-}
-
-/* TEXTO */
 .frase {
   font-family: 'Cormorant Garamond', serif;
   font-size: 20px;
   line-height: 1.8;
-  margin-bottom: 30px;
+  margin: 30px 0;
 }
 
-/* FOTO */
-.foto {
-  cursor: pointer;
+.clique {
+  margin-bottom: 20px;
+  font-size: 14px;
 }
 
 .foto img {
@@ -88,6 +80,7 @@ h1 {
   max-width: 380px;
   border-radius: 20px;
   box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  cursor: pointer;
   transition: 0.4s;
 }
 
@@ -95,92 +88,57 @@ h1 {
   transform: scale(1.05);
 }
 
-/* TEXTO CLIQUE */
-.clique {
-  margin-bottom: 20px;
-  font-size: 14px;
-  opacity: 0.8;
-}
-
 /* MODAL */
 .modal {
   display: none;
   position: fixed;
-  z-index: 999;
   inset: 0;
   background: rgba(0,0,0,0.6);
-
   align-items: center;
   justify-content: center;
 }
 
 .modal-content {
-  position: relative;
   background: #f5efe6;
-  padding: 30px;
+  padding: 25px;
   border-radius: 20px;
   width: 90%;
   max-width: 320px;
-
-  animation: fadeUp 0.4s ease;
+  text-align: center;
 }
 
-.modal img {
-  width: 180px;
-  margin: 15px 0;
-}
-
-/* BOTÃO X */
 .close {
   position: absolute;
   right: 15px;
-  top: 12px;
-  font-size: 22px;
+  top: 10px;
   cursor: pointer;
 }
 
-/* BOTÃO */
 .btn {
-  margin-top: 12px;
+  margin-top: 10px;
   padding: 12px;
   border: none;
   border-radius: 10px;
   background: #5a4a42;
   color: white;
-  font-size: 14px;
-  cursor: pointer;
   width: 100%;
-  transition: 0.3s;
-}
-
-.btn:hover {
-  background: #3e332d;
-}
-
-.feedback {
-  font-size: 13px;
-  margin-top: 8px;
-  display: none;
 }
 </style>
 </head>
 
 <body>
 
-<!-- 🎵 MÚSICA (instrumental elegante) -->
-<audio autoplay loop>
-  <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mp3">
-</audio>
+<!-- ANIMAÇÃO -->
+<div class="overlay">
+  <div class="convite"></div>
+</div>
 
 <div class="container">
 
-<h1>Júlio & Hellen 💍</h1>
-
-<div class="contador" id="contador"></div>
+<h1>Júlio & Hellen</h1>
 
 <div class="frase">
-  Nosso maior presente é ter vocês ao nosso lado nesse momento tão especial
-  <br><br>
+  Nosso maior presente é ter vocês ao nosso lado nesse momento tão especial.
   Mas, se for do seu desejo nos presentear, qualquer gesto de carinho será recebido com muito amor e fará parte do início da nossa nova história juntos ✨
 </div>
 
@@ -197,19 +155,16 @@ h1 {
 <!-- MODAL -->
 <div id="modal" class="modal">
   <div class="modal-content">
+    <span class="close" onclick="fecharModal()">✕</span>
 
-    <span class="close" onclick="fecharModal()">&times;</span>
+    <h3>Presente via Pix</h3>
 
-    <h3 style="font-family:'Cormorant Garamond', serif;">Presente via Pix</h3>
-
-    <img src="qrcode-pix.png">
+    <img src="qrcode-pix.png" width="180">
 
     <p>Ou utilize a chave:</p>
     <strong id="pixKey">hellengt02@gmail.com</strong>
 
     <button class="btn" onclick="copiarPix()">Copiar chave Pix</button>
-    <div class="feedback" id="feedback">Chave copiada com sucesso ✨</div>
-
   </div>
 </div>
 
@@ -226,39 +181,14 @@ function fecharModal() {
 
 window.onclick = function(event) {
   let modal = document.getElementById("modal");
-  if (event.target === modal) {
-    fecharModal();
-  }
+  if (event.target === modal) fecharModal();
 }
 
 function copiarPix() {
   const chave = document.getElementById("pixKey").innerText;
   navigator.clipboard.writeText(chave);
-
-  const feedback = document.getElementById("feedback");
-  feedback.style.display = "block";
-
-  setTimeout(() => {
-    feedback.style.display = "none";
-  }, 2000);
+  alert("Chave Pix copiada!");
 }
-
-// contador
-const dataCasamento = new Date("2026-06-26");
-
-function atualizarContador() {
-  const hoje = new Date();
-  const diff = dataCasamento - hoje;
-
-  const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
-
-  document.getElementById("contador").innerText =
-    dias > 0 ? "Faltam " + dias + " dias para o nosso grande dia 💍" :
-    "Hoje é o grande dia! 💖";
-}
-
-setInterval(atualizarContador, 1000);
-atualizarContador();
 </script>
 
 </body>
