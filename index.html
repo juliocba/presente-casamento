@@ -3,52 +3,79 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- FONTES PREMIUM -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+
 <title>Júlio & Hellen</title>
 
 <style>
 html, body {
   margin: 0;
-  font-family: 'Georgia', serif;
-  color: #5a4a42;
-  text-align: center;
-  height: 100%;
+  padding: 0;
   overflow-x: hidden;
 
-  background: radial-gradient(circle, #f5efe6 0%, #f5efe6 40%, #ffffff 100%);
+  background: radial-gradient(circle at center, #f5efe6 0%, #f5efe6 40%, #ffffff 100%);
+  color: #5a4a42;
+
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
 }
 
-body.modal-open {
-  overflow: hidden;
+/* brilho suave */
+body::before {
+  content: "";
   position: fixed;
-  width: 100%;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 60%);
+  animation: brilho 12s infinite linear;
+  z-index: 0;
+}
+
+@keyframes brilho {
+  0% {transform: rotate(0deg);}
+  100% {transform: rotate(360deg);}
 }
 
 .container {
+  position: relative;
+  z-index: 1;
   max-width: 600px;
   margin: auto;
-  padding: 40px 20px;
+  padding: 50px 20px;
+  animation: fadeUp 1s ease;
 }
 
+@keyframes fadeUp {
+  from {opacity: 0; transform: translateY(30px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+/* TÍTULO */
 h1 {
-  font-size: 32px;
+  font-family: 'Playfair Display', serif;
+  font-size: 34px;
+  margin-bottom: 10px;
 }
 
-.frase {
-  font-size: 18px;
-  margin: 25px 0;
-  line-height: 1.6;
-}
-
+/* CONTADOR */
 .contador {
-  margin-top: 15px;
-  font-size: 16px;
-}
-
-.clique {
-  margin-top: 20px;
   font-size: 15px;
+  margin-bottom: 20px;
+  opacity: 0.8;
 }
 
+/* TEXTO */
+.frase {
+  font-size: 17px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+}
+
+/* FOTO */
 .foto {
   cursor: pointer;
 }
@@ -56,25 +83,28 @@ h1 {
 .foto img {
   width: 100%;
   max-width: 380px;
-  border-radius: 16px;
-  margin-top: 10px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-  transition: 0.3s;
+  border-radius: 18px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+  transition: 0.4s;
 }
 
 .foto img:hover {
-  transform: scale(1.03);
+  transform: scale(1.04);
+}
+
+/* TEXTO CLIQUE */
+.clique {
+  margin-top: 18px;
+  font-size: 14px;
+  opacity: 0.7;
 }
 
 /* MODAL */
 .modal {
-  display: none; /* CORREÇÃO BUG */
+  display: none;
   position: fixed;
   z-index: 999;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background: rgba(0,0,0,0.6);
 
   align-items: center;
@@ -85,11 +115,11 @@ h1 {
   position: relative;
   background: #f5efe6;
   padding: 25px;
-  border-radius: 16px;
+  border-radius: 18px;
   width: 90%;
   max-width: 320px;
-  text-align: center;
-  animation: fadeUp 0.3s ease;
+
+  animation: fadeUp 0.4s ease;
 }
 
 .modal img {
@@ -100,35 +130,34 @@ h1 {
 /* BOTÃO X */
 .close {
   position: absolute;
-  right: 12px;
+  right: 15px;
   top: 10px;
-  font-size: 24px;
+  font-size: 22px;
   cursor: pointer;
 }
 
 /* BOTÃO */
 .btn {
-  margin-top: 10px;
+  margin-top: 12px;
   padding: 12px;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   background: #5a4a42;
   color: white;
   font-size: 14px;
   cursor: pointer;
   width: 100%;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: #3e332d;
 }
 
 .feedback {
   font-size: 13px;
   margin-top: 8px;
   display: none;
-}
-
-/* ANIMAÇÃO */
-@keyframes fadeUp {
-  from {opacity: 0; transform: translateY(30px);}
-  to {opacity: 1; transform: translateY(0);}
 }
 </style>
 </head>
@@ -141,12 +170,12 @@ h1 {
 
 <div class="container">
 
-<h1>Júlio & Hellen 💍</h1>
+<h1>Júlio & Hellen</h1>
 
 <div class="contador" id="contador"></div>
 
 <div class="frase">
-  Nosso maior presente é ter vocês ao nosso lado nesse momento tão especial 
+  Nosso maior presente é ter vocês ao nosso lado nesse momento tão especial
   <br><br>
   Mas, se for do seu desejo nos presentear, qualquer gesto de carinho será recebido com muito amor e fará parte do início da nossa nova história juntos ✨
 </div>
@@ -164,7 +193,7 @@ h1 {
 <!-- MODAL -->
 <div id="modal" class="modal">
   <div class="modal-content">
-    
+
     <span class="close" onclick="fecharModal()">&times;</span>
 
     <h3>Presente via Pix</h3>
@@ -175,27 +204,22 @@ h1 {
     <strong id="pixKey">hellengt02@gmail.com</strong>
 
     <button class="btn" onclick="copiarPix()">Copiar chave Pix</button>
-    <div class="feedback" id="feedback">Chave copiada com sucesso ✅</div>
+    <div class="feedback" id="feedback">Chave copiada com sucesso ✨</div>
 
   </div>
 </div>
 
 <script>
 function abrirModal() {
-  const modal = document.getElementById("modal");
-  modal.style.display = "flex";
-
-  document.body.classList.add("modal-open");
+  document.getElementById("modal").style.display = "flex";
+  document.body.style.overflow = "hidden";
 }
 
 function fecharModal() {
-  const modal = document.getElementById("modal");
-  modal.style.display = "none";
-
-  document.body.classList.remove("modal-open");
+  document.getElementById("modal").style.display = "none";
+  document.body.style.overflow = "auto";
 }
 
-// clicar fora
 window.onclick = function(event) {
   let modal = document.getElementById("modal");
   if (event.target === modal) {
@@ -203,7 +227,6 @@ window.onclick = function(event) {
   }
 }
 
-// copiar pix
 function copiarPix() {
   const chave = document.getElementById("pixKey").innerText;
   navigator.clipboard.writeText(chave);
